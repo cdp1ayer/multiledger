@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 # 安装 better-sqlite3 编译所需的依赖 (Python, make, g++)
 RUN apk add --no-cache python3 make g++
