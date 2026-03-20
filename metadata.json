@@ -1,0 +1,5 @@
+{
+  "name": "Multi-User Ledger",
+  "description": "A multi-user accounting and bookkeeping application with authentication, transaction management, and dashboard.",
+  "requestFramePermissions": []
+}
