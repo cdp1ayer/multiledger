@@ -41,7 +41,7 @@ export default function Dashboard() {
     fetchTransactions();
   }, [token, logout]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div>加载中...</div>;
 
   const totalIncome = transactions.filter(t => t.type === 'income').reduce((acc, t) => acc + t.amount, 0);
   const totalExpense = transactions.filter(t => t.type === 'expense').reduce((acc, t) => acc + t.amount, 0);
@@ -59,7 +59,7 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+      <h1 className="text-2xl font-bold text-gray-900">仪表盘</h1>
       
       {/* Summary Cards */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
@@ -71,8 +71,8 @@ export default function Dashboard() {
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Total Balance</dt>
-                  <dd className="text-2xl font-semibold text-gray-900">\${balance.toFixed(2)}</dd>
+                  <dt className="text-sm font-medium text-gray-500 truncate">总余额</dt>
+                  <dd className="text-2xl font-semibold text-gray-900">¥{balance.toFixed(2)}</dd>
                 </dl>
               </div>
             </div>
@@ -86,8 +86,8 @@ export default function Dashboard() {
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Total Income</dt>
-                  <dd className="text-2xl font-semibold text-gray-900">\${totalIncome.toFixed(2)}</dd>
+                  <dt className="text-sm font-medium text-gray-500 truncate">总收入</dt>
+                  <dd className="text-2xl font-semibold text-gray-900">¥{totalIncome.toFixed(2)}</dd>
                 </dl>
               </div>
             </div>
@@ -101,8 +101,8 @@ export default function Dashboard() {
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Total Expense</dt>
-                  <dd className="text-2xl font-semibold text-gray-900">\${totalExpense.toFixed(2)}</dd>
+                  <dt className="text-sm font-medium text-gray-500 truncate">总支出</dt>
+                  <dd className="text-2xl font-semibold text-gray-900">¥{totalExpense.toFixed(2)}</dd>
                 </dl>
               </div>
             </div>
@@ -113,7 +113,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Chart */}
         <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-lg font-medium text-gray-900 mb-4">Expenses by Category</h2>
+          <h2 className="text-lg font-medium text-gray-900 mb-4">各项支出占比</h2>
           <div className="h-64">
             {pieData.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
@@ -131,19 +131,19 @@ export default function Dashboard() {
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
+                  <Tooltip formatter={(value: number) => `¥${value.toFixed(2)}`} />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
             ) : (
-              <div className="h-full flex items-center justify-center text-gray-500">No expenses yet</div>
+              <div className="h-full flex items-center justify-center text-gray-500">暂无支出记录</div>
             )}
           </div>
         </div>
 
         {/* Recent Transactions */}
         <div className="bg-white shadow rounded-lg p-6">
-          <h2 className="text-lg font-medium text-gray-900 mb-4">Recent Transactions</h2>
+          <h2 className="text-lg font-medium text-gray-900 mb-4">最近账单</h2>
           <div className="flow-root">
             <ul className="-my-5 divide-y divide-gray-200">
               {transactions.slice(0, 5).map((transaction) => (
@@ -154,7 +154,7 @@ export default function Dashboard() {
                         {transaction.category_name}
                       </p>
                       <p className="text-sm text-gray-500 truncate">
-                        {format(parseISO(transaction.date), 'MMM d, yyyy')} {transaction.note && ` - ${transaction.note}`}
+                        {format(parseISO(transaction.date), 'yyyy-MM-dd')} {transaction.note && ` - ${transaction.note}`}
                       </p>
                     </div>
                     <div>
@@ -163,14 +163,14 @@ export default function Dashboard() {
                           transaction.type === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                         }`}
                       >
-                        {transaction.type === 'income' ? '+' : '-'}\${transaction.amount.toFixed(2)}
+                        {transaction.type === 'income' ? '+' : '-'}¥{transaction.amount.toFixed(2)}
                       </span>
                     </div>
                   </div>
                 </li>
               ))}
               {transactions.length === 0 && (
-                <li className="py-4 text-center text-sm text-gray-500">No transactions found</li>
+                <li className="py-4 text-center text-sm text-gray-500">暂无账单记录</li>
               )}
             </ul>
           </div>

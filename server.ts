@@ -104,6 +104,20 @@ app.post('/api/categories', authenticate, (req: any, res) => {
   }
 });
 
+app.delete('/api/categories/:id', authenticate, (req: any, res) => {
+  try {
+    const stmt = db.prepare('DELETE FROM categories WHERE id = ? AND user_id = ?');
+    const info = stmt.run(req.params.id, req.user.id);
+    if (info.changes === 0) return res.status(404).json({ error: 'Not found' });
+    res.json({ message: 'Deleted' });
+  } catch (err: any) {
+    if (err.code === 'SQLITE_CONSTRAINT_FOREIGNKEY') {
+      return res.status(400).json({ error: 'Cannot delete category in use' });
+    }
+    res.status(500).json({ error: 'Failed to delete category' });
+  }
+});
+
 // Transactions
 app.get('/api/transactions', authenticate, (req: any, res) => {
   const transactions = db.prepare(`

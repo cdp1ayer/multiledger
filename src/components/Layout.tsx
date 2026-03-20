@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, ReceiptText, LogOut } from 'lucide-react';
+import { LayoutDashboard, ReceiptText, LogOut, Tags } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function Layout() {
@@ -12,8 +12,9 @@ export default function Layout() {
   }
 
   const navigation = [
-    { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-    { name: 'Transactions', href: '/transactions', icon: ReceiptText },
+    { name: '仪表盘', href: '/', icon: LayoutDashboard },
+    { name: '账单', href: '/transactions', icon: ReceiptText },
+    { name: '分类管理', href: '/categories', icon: Tags },
   ];
 
   return (
@@ -21,7 +22,7 @@ export default function Layout() {
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
         <div className="h-16 flex items-center px-6 border-b border-gray-200">
-          <h1 className="text-xl font-bold text-indigo-600">MultiLedger</h1>
+          <h1 className="text-xl font-bold text-indigo-600">个人记账</h1>
         </div>
         
         <nav className="flex-1 px-4 py-4 space-y-1">
@@ -62,7 +63,7 @@ export default function Layout() {
             className="flex items-center w-full px-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-50 hover:text-gray-900"
           >
             <LogOut className="mr-3 h-5 w-5 text-gray-400" />
-            Sign out
+            退出登录
           </button>
         </div>
       </div>
