@@ -1,5 +1,8 @@
 FROM node:18-alpine
 
+# 安装 better-sqlite3 编译所需的依赖 (Python, make, g++)
+RUN apk add --no-cache python3 make g++
+
 # 设置工作目录
 WORKDIR /app
 
