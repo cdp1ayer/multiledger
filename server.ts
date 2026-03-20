@@ -1,5 +1,4 @@
 import express from 'express';
-import { createServer as createViteServer } from 'vite';
 import path from 'path';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -168,6 +167,7 @@ async function startServer() {
   const PORT = 3000;
 
   if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
